@@ -1,72 +1,30 @@
-# JFXAI4OHS — AI-Powered B2B E-Commerce & Open Hardware Platform
+# JFXAI4OHS — Mercado Libre MCP Integration Architecture
 
-[![GitHub](https://img.shields.io/badge/GitHub-open--source-black?logo=github)](https://github.com/robotics-intelligent-systems/jfxai4ohs)
-[![AI](https://img.shields.io/badge/AI-B2B%20Commerce-blue)](https://github.com/robotics-intelligent-systems/jfxai4ohs)
-[![E-Commerce](https://img.shields.io/badge/Domain-B2B%20E--Commerce-green)](https://github.com/robotics-intelligent-systems/jfxai4ohs)
-[![Open Hardware](https://img.shields.io/badge/Open-Hardware-orange)](https://github.com/robotics-intelligent-systems/jfxai4ohs)
-[![MBSE](https://img.shields.io/badge/Engineering-MBSE-purple)](https://github.com/robotics-intelligent-systems/jfxai4ohs)
+## AI-Powered B2B E-Commerce, Industrial Procurement & Open Hardware Platform
 
-> Open-source reference platform for AI-powered B2B e-commerce, industrial procurement, auctions, ERP integration, product catalogs, open hardware and engineering supply chains.
-
----
-
-## Table of Contents
-
-- [Description and Context](#description-and-context)
-- [Project Vision](#project-vision)
-- [Objectives](#objectives)
-- [Functional Scope](#functional-scope)
-- [B2B Commerce Architecture](#b2b-commerce-architecture)
-- [Business Ecosystem](#business-ecosystem)
-- [AI Capabilities](#ai-capabilities)
-- [B2B Marketplace](#b2b-marketplace)
-- [Auction and Negotiation Engine](#auction-and-negotiation-engine)
-- [Procurement](#procurement)
-- [ERP Integration](#erp-integration)
-- [Product Catalog](#product-catalog)
-- [Order Management](#order-management)
-- [Open Hardware Catalog](#open-hardware-catalog)
-- [Hardware and Industrial Products](#hardware-and-industrial-products)
-- [MBSE / CAD / CAM / CAS](#mbse--cad--cam--cas)
-- [Software Dependency Compendium](#software-dependency-compendium)
-- [Hardware Dependency Compendium](#hardware-dependency-compendium)
-- [Dependency Classification](#dependency-classification)
-- [Recommended Technology Stack](#recommended-technology-stack)
-- [Data Architecture](#data-architecture)
-- [AI Architecture](#ai-architecture)
-- [Security](#security)
-- [User Guide](#user-guide)
-- [Installation Guide](#installation-guide)
-- [Dependencies](#dependencies)
-- [Testing and Validation](#testing-and-validation)
-- [Repository Structure](#repository-structure)
-- [Development Workflow](#development-workflow)
-- [Contribution](#contribution)
-- [Code of Conduct](#code-of-conduct)
-- [Authors](#authors)
-- [Additional Information](#additional-information)
-- [License](#license)
-- [Roadmap](#roadmap)
+> **Repository:** `robotics-intelligent-systems/jfxai4ohs`  
+> **Integration target:** Official Mercado Libre MCP Server  
+> **Official MCP endpoint:** `https://mcp.mercadolibre.com/mcp`
+>
+> **Architecture objective:** extend JFXAI4OHS with a standards-based Mercado Libre integration while preserving the project's open, modular, replaceable B2B-commerce architecture.
 
 ---
 
-# Description and Context
+# 1. Project Context
 
-**JFXAI4OHS** is an open-source reference architecture for an **AI-powered B2B e-commerce and industrial commerce platform**.
-
-The project combines:
+JFXAI4OHS is an open-source reference platform for:
 
 - B2B e-commerce;
 - industrial marketplaces;
 - supplier management;
 - procurement;
 - product catalogs;
-- auctions;
+- RFQ/RFP workflows;
+- auctions and negotiation;
 - ERP integration;
 - order management;
 - AI-assisted commerce;
 - open hardware;
-- engineering products;
 - manufacturing;
 - robotics;
 - IoT;
@@ -76,38 +34,7 @@ The project combines:
 - CAD/CAM/CAS;
 - Model-Based Systems Engineering.
 
-The current repository combines B2B/e-commerce technologies such as:
-
-- JADE-based multi-agent auction systems;
-- Frappe Webshop;
-- Prenda;
-- Broadleaf Commerce;
-- Odoo;
-- OpenERP/Tryton integrations;
-- PrestaShop integrations;
-
-with an extensive open-hardware ecosystem covering:
-
-- autonomous vehicles;
-- drones;
-- robotics;
-- embedded systems;
-- RISC-V;
-- CubeSats;
-- 3D printing;
-- CNC;
-- agricultural robotics;
-- EVs;
-- industrial automation;
-- POS systems.
-
-This combination allows JFXAI4OHS to be treated as a **digital commerce layer for physical products, industrial components and open engineering systems** rather than simply a conventional online store.
-
----
-
-# Project Vision
-
-The long-term vision is to create a modular B2B commerce ecosystem where organizations can:
+The existing project lifecycle is:
 
 ```text
 Discover
@@ -135,156 +62,540 @@ Operate
 Maintain
 ```
 
-The platform therefore connects **digital commerce with the complete industrial product lifecycle**.
+The Mercado Libre integration adds a major Latin American marketplace boundary to this lifecycle.
 
 ---
 
-# Objectives
+# 2. Important Current MCP Capability Boundary
 
-## Primary Objectives
+The official Mercado Libre MCP Server is currently primarily a **developer-integration and documentation MCP service**.
 
-1. Provide an open B2B e-commerce reference architecture.
-2. Support multi-vendor marketplaces.
-3. Support industrial procurement.
-4. Support RFQ/RFP workflows.
-5. Support auctions and negotiations.
-6. Integrate ERP platforms.
-7. Support AI-powered product discovery.
-8. Support supplier intelligence.
-9. Support configurable products.
-10. Connect commerce with engineering and manufacturing.
-11. Provide an open hardware catalog.
-12. Support digital product information throughout its lifecycle.
-
----
-
-# Functional Scope
-
-| Domain | Capability |
-|---|---|
-| Marketplace | Multi-vendor B2B commerce |
-| Catalog | Product and technical catalog |
-| Suppliers | Supplier management |
-| Procurement | Purchase workflows |
-| RFQ | Request-for-quotation |
-| Auctions | Dynamic procurement |
-| Negotiation | Buyer/supplier negotiation |
-| ERP | ERP integration |
-| Orders | Order management |
-| Inventory | Inventory integration |
-| AI | Recommendations and assistants |
-| Engineering | Product configuration |
-| Hardware | Open hardware catalog |
-| Manufacturing | CAD/CAM integration |
-| MBSE | Systems engineering |
-| Logistics | Delivery and fulfillment |
-| Analytics | Business intelligence |
-
----
-
-# B2B Commerce Architecture
+Current official tools documented by Mercado Libre are:
 
 ```text
-┌──────────────────────────────────────────────────────────────┐
-│                        B2B USERS                             │
-│ Buyers │ Suppliers │ Manufacturers │ Distributors │ Admins  │
-└─────────────────────────────┬────────────────────────────────┘
+search_documentation
+get_documentation_page
+```
+
+These tools allow an agentic IDE or MCP-compatible client to:
+
+- search Mercado Libre developer documentation;
+- retrieve complete documentation pages;
+- identify relevant API endpoints;
+- understand parameters and error cases;
+- generate integration code;
+- accelerate implementation against Mercado Libre APIs.
+
+Therefore:
+
+> **Do not model the current official Mercado Libre MCP server as if it already exposes complete seller operations such as orders, listing creation, stock updates, questions, claims, or shipments.**
+
+Those runtime seller capabilities should remain behind the **Mercado Libre REST/API Adapter** until Mercado Libre officially exposes equivalent MCP tools.
+
+---
+
+# 3. Target Integration Model
+
+```text
+                         JFXAI4OHS
                               │
                               ▼
-┌──────────────────────────────────────────────────────────────┐
-│                    EXPERIENCE LAYER                          │
-│ Web │ Mobile │ API │ Portal │ Dashboard │ AI Assistant      │
-└─────────────────────────────┬────────────────────────────────┘
-                              │
-                              ▼
-┌──────────────────────────────────────────────────────────────┐
-│                    COMMERCE PLATFORM                         │
-│ Catalog │ Pricing │ Cart │ Orders │ Quotes │ Auctions        │
-└─────────────────────────────┬────────────────────────────────┘
+                    AI COMMERCE ORCHESTRATOR
                               │
              ┌────────────────┼────────────────┐
              ▼                ▼                ▼
-        Procurement       AI Services       Marketplace
+       Product Agent    Procurement Agent  Supplier Agent
              │                │                │
              └────────────────┼────────────────┘
                               ▼
-┌──────────────────────────────────────────────────────────────┐
-│                    BUSINESS SERVICES                          │
-│ ERP │ CRM │ Inventory │ Accounting │ Logistics │ Payments   │
-└─────────────────────────────┬────────────────────────────────┘
+                         MCP GATEWAY
+                              │
+               ┌──────────────┼──────────────┐
+               ▼              ▼              ▼
+        Internal Tools   Mercado Libre    Other MCP
+                         MCP Server       Servers
                               │
                               ▼
-┌──────────────────────────────────────────────────────────────┐
-│                 INDUSTRIAL ECOSYSTEM                         │
-│ Hardware │ Components │ Robotics │ Vehicles │ IoT │ OEMs     │
-└──────────────────────────────────────────────────────────────┘
+                Developer Documentation
+                Integration Knowledge
+                              │
+                              ▼
+                    ML API Adapter Layer
+                              │
+                              ▼
+                   Mercado Libre APIs
 ```
 
 ---
 
-# Business Ecosystem
+# 4. Architectural Principle
 
-JFXAI4OHS should model the B2B ecosystem around multiple actors.
+The Mercado Libre MCP server should be treated as an **external, replaceable integration service**.
 
 ```text
-                    Marketplace
-                        │
-       ┌────────────────┼────────────────┐
-       ▼                ▼                ▼
-     Buyers          Suppliers       Manufacturers
-       │                │                │
-       └────────────────┼────────────────┘
-                        ▼
-                  Distributors
-                        │
-                        ▼
-                    Logistics
-                        │
-                        ▼
-                    Customers
+OPEN JFXAI4OHS CORE
+────────────────────────────────────────
+Commerce
+Catalog
+Procurement
+RFQ
+Auctions
+Supplier Management
+ERP Integration
+AI Agents
+RAG
+B2B APIs
+Open Hardware Catalog
+MBSE / CAD / CAM / CAS
+
+             ↕ MCP / REST adapter
+
+EXTERNAL MARKETPLACE
+────────────────────────────────────────
+Mercado Libre MCP Server
+Mercado Libre APIs
+Mercado Libre seller ecosystem
+Optional Mercado Pago integration
 ```
 
-## Buyer
-
-Capabilities:
-
-- search products;
-- compare suppliers;
-- request quotations;
-- negotiate;
-- participate in auctions;
-- place purchase orders;
-- monitor deliveries.
-
-## Supplier
-
-Capabilities:
-
-- publish catalog;
-- manage inventory;
-- define pricing;
-- receive RFQs;
-- respond to bids;
-- negotiate;
-- manage orders.
-
-## Manufacturer
-
-Capabilities:
-
-- publish configurable products;
-- expose manufacturing capabilities;
-- integrate CAD/CAM;
-- provide lead times;
-- manage production orders.
+This prevents marketplace vendor lock-in.
 
 ---
 
-# AI Capabilities
+# 5. Official Mercado Libre MCP Server
 
-AI should augment the B2B procurement process.
+Mercado Libre currently hosts its MCP service at:
 
-## AI Product Assistant
+```text
+https://mcp.mercadolibre.com/mcp
+```
+
+Current Mercado Libre developer documentation states that the MCP server supports MCP-compatible clients such as:
+
+- Cursor;
+- Windsurf;
+- Cline;
+- Claude Desktop;
+- ChatGPT;
+- other MCP-compatible clients.
+
+The current documentation describes OAuth 2.0 authorization initiated by the MCP client.
+
+---
+
+# 6. Recommended MCP Configuration
+
+Conceptual configuration:
+
+```json
+{
+  "mcpServers": {
+    "mercadolibre-mcp-server": {
+      "url": "https://mcp.mercadolibre.com/mcp"
+    }
+  }
+}
+```
+
+For clients that require a remote MCP bridge:
+
+```json
+{
+  "mcpServers": {
+    "mercadolibre-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.mercadolibre.com/mcp"
+      ]
+    }
+  }
+}
+```
+
+Authentication should follow the current Mercado Libre OAuth flow supported by the selected MCP client.
+
+---
+
+# 7. MCP Development-Time Flow
+
+The strongest immediate use of the official MCP server inside JFXAI4OHS is:
+
+```text
+Developer / AI Coding Agent
+          ↓
+Question about Mercado Libre integration
+          ↓
+Official Mercado Libre MCP
+          ↓
+search_documentation
+          ↓
+Relevant API Documentation
+          ↓
+get_documentation_page
+          ↓
+Endpoint / Schema / Error Cases
+          ↓
+Generate Adapter Code
+          ↓
+Test
+          ↓
+JFXAI4OHS Integration Module
+```
+
+---
+
+# 8. Example Developer Workflow
+
+Example request:
+
+```text
+"Implement an integration for synchronizing
+JFXAI4OHS product inventory with Mercado Libre."
+```
+
+Agentic development flow:
+
+```text
+AI Coding Agent
+       ↓
+Mercado Libre MCP
+       ↓
+Search current inventory/listing documentation
+       ↓
+Retrieve official documentation pages
+       ↓
+Generate API contract
+       ↓
+Create adapter
+       ↓
+Unit tests
+       ↓
+Integration tests
+       ↓
+Human review
+```
+
+This reduces the risk of generating code from obsolete API assumptions.
+
+---
+
+# 9. Runtime Marketplace Integration
+
+Because the current official MCP server is documentation-oriented, runtime marketplace operations should use:
+
+```text
+JFXAI4OHS
+    ↓
+Commerce Service
+    ↓
+Mercado Libre Adapter
+    ↓
+OAuth / Authorization
+    ↓
+Mercado Libre REST APIs
+```
+
+The MCP server assists in **discovering and implementing** the correct API integration.
+
+---
+
+# 10. Dual-Control Architecture
+
+The architecture should distinguish:
+
+```text
+CONTROL / KNOWLEDGE PLANE
+────────────────────────────────
+Mercado Libre MCP
+Documentation discovery
+API integration guidance
+Current specifications
+Code-generation context
+
+DATA / TRANSACTION PLANE
+────────────────────────────────
+Mercado Libre REST APIs
+Products
+Listings
+Orders
+Inventory
+Questions
+Shipping
+Claims
+Reputation
+Seller operations
+```
+
+This is the recommended architecture until the official MCP tool surface expands.
+
+---
+
+# 11. Mercado Libre Adapter Boundary
+
+```text
+JFXAI4OHS Domain
+       ↓
+Canonical Marketplace API
+       ↓
+MercadoLibreAdapter
+       ↓
+Authentication
+       ↓
+Rate / Retry Policy
+       ↓
+Mercado Libre APIs
+```
+
+Adapter responsibilities:
+
+- API version isolation;
+- canonical data mapping;
+- OAuth handling;
+- pagination;
+- retries;
+- rate-limit handling;
+- idempotency;
+- audit metadata;
+- marketplace-specific error translation;
+- observability;
+- country/site mapping.
+
+---
+
+# 12. Canonical Marketplace Interface
+
+Recommended JFXAI4OHS abstraction:
+
+```text
+MarketplaceProvider
+├── authenticate()
+├── getAccount()
+├── listProducts()
+├── getProduct()
+├── publishProduct()
+├── updateProduct()
+├── updateInventory()
+├── updatePrice()
+├── listOrders()
+├── getOrder()
+├── listQuestions()
+├── answerQuestion()
+├── getShipment()
+├── listClaims()
+├── getSellerReputation()
+└── syncCatalog()
+```
+
+Not every marketplace implementation must support every capability.
+
+---
+
+# 13. Capability Discovery
+
+```yaml
+marketplace_provider:
+  id: mercadolibre
+  capabilities:
+    documentation_mcp: true
+    product_read: api_dependent
+    product_write: api_dependent
+    order_read: api_dependent
+    stock_write: api_dependent
+    price_write: api_dependent
+    questions: api_dependent
+    shipments: api_dependent
+    reputation: api_dependent
+    claims: api_dependent
+```
+
+The capability registry prevents agents from assuming unsupported operations.
+
+---
+
+# 14. Mercado Libre Sites
+
+JFXAI4OHS should treat marketplace geography as configuration.
+
+Example site identifiers include:
+
+```text
+MLA → Argentina
+MLB → Brazil
+MLM / MEX → Mexico, depending on API context/documentation
+MCO → Colombia
+MLC → Chile
+MLU → Uruguay
+```
+
+Actual site identifiers and API behavior should be resolved against current official documentation through the Mercado Libre MCP service.
+
+---
+
+# 15. Product Catalog Mapping
+
+JFXAI4OHS already distinguishes commercial and technical attributes.
+
+Recommended mapping:
+
+```text
+JFXAI4OHS Product
+        │
+        ├── Internal SKU
+        ├── Title
+        ├── Description
+        ├── Category
+        ├── Price
+        ├── Currency
+        ├── Stock
+        ├── Supplier
+        ├── Lead Time
+        ├── Warranty
+        ├── Technical Specs
+        ├── CAD / BOM
+        ├── Compliance
+        └── Digital Product Passport
+                 │
+                 ▼
+        Marketplace Mapper
+                 │
+                 ▼
+        Mercado Libre Listing
+```
+
+---
+
+# 16. Product Mapping Layer
+
+```yaml
+product_mapping:
+  internal_product_id: OHS-00192
+  marketplace: mercadolibre
+  external_item_id: null
+  site_id: MLA
+  title: "Industrial Embedded Computer"
+  category_mapping:
+    internal: industrial_computers
+    marketplace: null
+  commercial:
+    price: 900
+    currency: USD
+    available_quantity: 100
+  technical_attributes:
+    processor: "..."
+    memory: "8 GB"
+    can_bus: true
+    os: "Linux"
+```
+
+The marketplace category and attribute mapping should be resolved using current API documentation.
+
+---
+
+# 17. Category Mapping Agent
+
+```text
+Internal Product Taxonomy
+          ↓
+Category Mapping Agent
+          ↓
+Mercado Libre Documentation MCP
+          ↓
+Relevant Category/API Guidance
+          ↓
+Mercado Libre API Adapter
+          ↓
+Candidate Category
+          ↓
+Human / Rule Validation
+```
+
+This is especially valuable for the JFXAI4OHS open-hardware catalog.
+
+---
+
+# 18. Open Hardware Marketplace Flow
+
+```text
+Open Hardware Project
+        ↓
+BOM + CAD + Firmware + Datasheet
+        ↓
+JFXAI4OHS Digital Product Passport
+        ↓
+Commercial Product Definition
+        ↓
+Marketplace Mapping
+        ↓
+Mercado Libre Listing
+        ↓
+Order
+        ↓
+ERP
+        ↓
+Manufacturing / Fulfillment
+```
+
+---
+
+# 19. Digital Product Passport
+
+For engineering products:
+
+```text
+Digital Product Passport
+├── SKU
+├── Product Version
+├── BOM
+├── CAD Files
+├── Firmware
+├── Software
+├── Datasheet
+├── Safety Information
+├── Certifications
+├── Manufacturing Process
+├── Supplier
+├── Warranty
+├── Repairability
+├── Lifecycle State
+└── Marketplace References
+```
+
+Mercado Libre receives only the appropriate commercial/public subset.
+
+---
+
+# 20. Data Minimization
+
+Do not expose unnecessary engineering IP to external marketplaces.
+
+```text
+INTERNAL
+────────────────────────────
+Full CAD
+Full BOM
+Supplier costing
+Manufacturing process
+Internal design notes
+Simulation models
+
+PUBLIC MARKETPLACE
+────────────────────────────
+Public technical specifications
+Commercial description
+Compatibility
+Images
+Warranty
+Availability
+Approved documentation
+```
+
+---
+
+# 21. AI Product Assistant + Mercado Libre
+
+Existing JFXAI4OHS concept:
 
 ```text
 Buyer
@@ -304,848 +615,1737 @@ Commercial Comparison
 Recommendation
 ```
 
-Example:
-
-> "Find an industrial embedded computer with Linux support, 8 GB RAM, CAN bus, low power consumption and availability for 100 units."
-
-The AI layer can translate this into structured procurement constraints.
-
----
-
-# AI Supplier Intelligence
-
-Potential capabilities:
-
-- supplier ranking;
-- supplier discovery;
-- lead-time prediction;
-- price comparison;
-- delivery reliability;
-- historical quality;
-- catalog classification;
-- duplicate-product detection.
-
-Example:
+Extended architecture:
 
 ```text
-Supplier
-   ↓
-Historical Orders
-   ↓
-Delivery Performance
-   ↓
-Quality Metrics
-   ↓
-Price
-   ↓
-Availability
-   ↓
-AI Supplier Score
-```
-
-The score should be explainable and configurable by the buyer.
-
----
-
-# AI Product Intelligence
-
-AI can classify products according to:
-
-- category;
-- manufacturer;
-- specifications;
-- compatibility;
-- application;
-- industry;
-- lifecycle;
-- technical standards.
-
-AI can also extract structured attributes from:
-
-- PDFs;
-- datasheets;
-- CAD metadata;
-- product descriptions;
-- manuals;
-- images.
-
----
-
-# B2B Marketplace
-
-The marketplace should support:
-
-- multiple vendors;
-- company accounts;
-- organizational roles;
-- product catalogs;
-- negotiated pricing;
-- volume pricing;
-- minimum order quantities;
-- purchase orders;
-- RFQ;
-- auctions;
-- contracts.
-
----
-
-# Auction and Negotiation Engine
-
-The repository includes a JADE-based multi-agent auction concept.
-
-This can evolve into a general-purpose B2B negotiation engine.
-
-```text
-Buyer Agent
-     │
-     ├───────────────┐
-     ▼               ▼
-Supplier Agent A  Supplier Agent B
-     │               │
-     └───────┬───────┘
-             ▼
-       Auction Engine
-             │
-             ▼
-       Winning Offer
-```
-
-Supported mechanisms can include:
-
-- English auction;
-- Dutch auction;
-- reverse auction;
-- sealed bid;
-- RFQ;
-- negotiated procurement.
-
-AI agents should operate under explicit commercial rules and approval policies.
-
----
-
-# Procurement
-
-The procurement workflow should support:
-
-```text
-Need
- ↓
-Specification
- ↓
-Supplier Discovery
- ↓
-RFQ
- ↓
-Quotation
- ↓
+Buyer Request
+     ↓
+JFXAI4OHS AI Product Agent
+     ↓
+Internal Catalog
+     +
+Marketplace Providers
+     ↓
+Mercado Libre Adapter
+     ↓
+Canonical Product Results
+     ↓
+Technical Normalization
+     ↓
 Comparison
- ↓
-Negotiation
- ↓
-Approval
- ↓
-Purchase Order
- ↓
-Fulfillment
- ↓
-Invoice
+     ↓
+Recommendation
 ```
+
+Marketplace search availability must follow the currently permitted Mercado Libre APIs.
 
 ---
 
-# ERP Integration
-
-Potential ERP integrations include:
-
-- Odoo;
-- OpenERP;
-- Tryton;
-- Frappe/ERPNext;
-- other ERP platforms through REST, GraphQL or event APIs.
-
-Integration domains:
+# 22. Procurement Agent
 
 ```text
-Commerce
-   ↕
-ERP
-   ├── Customers
-   ├── Suppliers
-   ├── Products
-   ├── Inventory
-   ├── Orders
-   ├── Purchasing
-   ├── Accounting
-   └── Logistics
+Procurement Need
+       ↓
+Specification Agent
+       ↓
+Internal Suppliers
+       +
+Marketplace Sources
+       ↓
+Mercado Libre Integration
+       ↓
+Commercial Candidates
+       ↓
+Normalization
+       ↓
+Supplier / Offer Comparison
+       ↓
+Human Procurement Review
 ```
 
 ---
 
-# Product Catalog
+# 23. B2B Constraint
 
-The catalog should support both commercial and technical attributes.
+Mercado Libre is primarily a marketplace platform and may not reproduce every specialized B2B mechanism in JFXAI4OHS.
 
-## Commercial Attributes
+JFXAI4OHS remains authoritative for:
 
-- SKU;
+- RFQs;
+- RFPs;
+- negotiated procurement;
+- reverse auctions;
+- complex B2B contracts;
+- configurable industrial products;
+- engineering validation;
+- buyer approval workflows.
+
+Mercado Libre is treated as:
+
+```text
+External Sales / Procurement Channel
+```
+
+not as the core B2B process engine.
+
+---
+
+# 24. Supplier Intelligence
+
+JFXAI4OHS can normalize external seller information into a supplier profile where permitted.
+
+```text
+Marketplace Seller
+      ↓
+Authorized Marketplace Data
+      ↓
+Supplier Adapter
+      ↓
+Canonical Supplier Profile
+      ↓
+Internal Performance Data
+      ↓
+Supplier Intelligence
+```
+
+Potential dimensions:
+
 - price;
-- currency;
-- MOQ;
+- historical internal delivery performance;
+- quality;
+- marketplace reputation, where available;
 - availability;
-- supplier;
+- location;
 - lead time;
-- warranty.
-
-## Technical Attributes
-
-- dimensions;
-- weight;
-- power;
-- voltage;
-- interfaces;
-- processor;
-- memory;
-- communication protocols;
-- operating temperature;
-- certifications.
+- order history.
 
 ---
 
-# Configurable Products
-
-Industrial products may require configuration before purchase.
+# 25. Supplier Scoring
 
 ```text
-Base Product
-    ↓
-Configuration
-    ├── CPU
-    ├── RAM
-    ├── Storage
-    ├── Power
-    ├── Sensors
-    └── Communication
-    ↓
-Validated Configuration
-    ↓
-Quotation
-    ↓
-Manufacturing
+Supplier Score
+     =
+Internal Quality
++ Internal Delivery Reliability
++ Price Competitiveness
++ Availability
++ External Reputation Signal
++ Commercial Risk
 ```
 
-This creates a bridge between:
+The score should be:
 
-**E-commerce → Engineering → Manufacturing.**
+- explainable;
+- configurable;
+- evidence-backed;
+- subject to buyer policy.
 
 ---
 
-# Order Management
+# 26. Avoid Unsupported AI Inference
 
-The order lifecycle:
+Do not infer:
+
+- personal traits of sellers;
+- protected characteristics;
+- creditworthiness without lawful evidence;
+- hidden relationships;
+- arbitrary reputation categories.
+
+Marketplace seller data should remain commercial and operational.
+
+---
+
+# 27. Order Integration
+
+Canonical flow:
 
 ```text
-Draft
- ↓
-Quote
- ↓
-Approved
- ↓
-Purchase Order
- ↓
-Confirmed
- ↓
-Processing
- ↓
-Manufacturing
- ↓
-Shipping
- ↓
-Delivered
- ↓
-Completed
+Mercado Libre Order
+        ↓
+Marketplace Adapter
+        ↓
+Canonical Order
+        ↓
+JFXAI4OHS Order Service
+        ↓
+ERP
+        ↓
+Inventory
+        ↓
+Accounting
+        ↓
+Logistics
 ```
 
-Each transition should be auditable.
-
 ---
 
-# Open Hardware Catalog
+# 28. Canonical Order Model
 
-The repository contains an unusually broad open-hardware ecosystem.
-
-This catalog should be normalized into technical categories.
-
-## Aerospace
-
-Examples represented in the repository include:
-
-- CubePilot;
-- PyCubed;
-- open aerospace platforms;
-- autonomous aircraft.
-
-## Drones
-
-- Pixhawk;
-- ExpressLRS;
-- eXplora Tailsitter VTOL;
-- flight-controller hardware;
-- radio-control systems.
-
-## Robotics
-
-- OpenER;
-- OpenArm;
-- Roomi;
-- LGDXRobot2;
-- EMAR;
-- ROMI Rover;
-- autonomous platforms.
-
-## Automotive
-
-- AV4EV;
-- open electric vehicles;
-- e-bikes;
-- e-scooters;
-- autonomous vehicle platforms.
-
-## Agriculture
-
-- Acorn precision farming rover;
-- OpenHydroponics;
-- agricultural robotics.
-
-## Embedded Computing
-
-- OLINUXINO;
-- RISC-V;
-- CORE-V;
-- Raspberry Pi Compute Module carrier systems;
-- nRF52.
-
-## Manufacturing
-
-- BigFDM;
-- OpenCMM;
-- GoodEnoughCNC;
-- open embroidery machines;
-- 3D-printing systems.
-
-## Consumer / Simulation
-
-- OpenTabletDriver;
-- open joystick systems;
-- Relativty VR headset;
-- Open Kiosk.
-
-The repository itself currently identifies these domains and explicitly organizes engineering material under MBSE, CAD, CAM and CAS.
-
----
-
-# Hardware and Industrial Products
-
-The commerce platform can treat open hardware as a first-class product domain.
-
-```text
-Hardware Product
-      │
-      ├── Bill of Materials
-      ├── CAD Files
-      ├── Firmware
-      ├── Software
-      ├── Datasheet
-      ├── Certifications
-      ├── Manufacturing Process
-      ├── Supplier
-      └── Commercial Offer
+```yaml
+order:
+  id: internal-order-id
+  channel: mercadolibre
+  external_order_id: "..."
+  buyer_reference: "..."
+  items:
+    - product_id: "..."
+      external_item_id: "..."
+      quantity: 2
+      unit_price: 100
+  currency: "..."
+  status: "..."
+  fulfillment:
+    mode: "..."
+  payment_reference: "..."
+  created_at: "..."
 ```
 
-This creates a **Digital Product Passport** concept for engineering products.
+---
+
+# 29. Inventory Synchronization
+
+```text
+ERP Inventory
+      ↓
+Canonical Inventory Service
+      ↓
+Marketplace Sync Policy
+      ↓
+Mercado Libre Adapter
+      ↓
+External Listing Stock
+```
+
+Important safeguards:
+
+- source-of-truth definition;
+- reservation handling;
+- idempotency;
+- retry;
+- conflict detection;
+- inventory floor;
+- audit trail.
 
 ---
 
-# MBSE / CAD / CAM / CAS
-
-The existing repository explicitly defines:
-
-- **MBSE** as the systems-engineering architecture layer;
-- **CAD** for computer-aided design;
-- **CAM** for manufacturing and assembly;
-- **CAS** for simulation and performance analysis.
-
-Recommended lifecycle:
+# 30. Multi-Channel Inventory
 
 ```text
-Business Requirement
-        ↓
-System Requirement
-        ↓
-MBSE
-        ↓
-Architecture
-        ↓
-CAD
-        ↓
-CAM
-        ↓
-CAS / Simulation
-        ↓
-Manufacturing
-        ↓
-B2B Marketplace
-        ↓
+                        ERP STOCK
+                           │
+                           ▼
+                  Inventory Allocator
+                    ┌──────┼──────┐
+                    ▼      ▼      ▼
+                  B2B    Webshop  Mercado Libre
+                  Portal           Channel
+```
+
+Do not publish total physical stock blindly across every channel.
+
+---
+
+# 31. Price Synchronization
+
+```text
+ERP / Pricing Engine
+       ↓
+B2B Pricing Policy
+       ↓
+Channel Pricing Rules
+       ↓
+Mercado Libre Adapter
+       ↓
+Marketplace Price
+```
+
+Possible policy variables:
+
+- marketplace fee;
+- taxes;
+- logistics;
+- promotional strategy;
+- currency;
+- minimum margin;
+- volume constraints.
+
+---
+
+# 32. Pricing Agent
+
+```text
+Cost
+  +
+Marketplace Fees
+  +
+Inventory
+  +
+Target Margin
+  +
+Demand Signals
+       ↓
+Pricing Recommendation
+       ↓
+Business Rules
+       ↓
+Human Approval
+       ↓
+Marketplace Update
+```
+
+Do not permit unrestricted autonomous repricing without policy limits.
+
+---
+
+# 33. Questions and Customer Interaction
+
+If/when enabled through current Mercado Libre APIs:
+
+```text
+Buyer Question
+      ↓
+Mercado Libre
+      ↓
+Marketplace Adapter
+      ↓
+JFXAI4OHS Customer Interaction Service
+      ↓
+RAG
+      ↓
+AI Draft Answer
+      ↓
+Human / Policy Review
+      ↓
+Marketplace Response
+```
+
+This is especially useful for technically complex open-hardware products.
+
+---
+
+# 34. Technical Support RAG
+
+Knowledge sources:
+
+```text
+Product Datasheets
+Manuals
+Compatibility Tables
+FAQ
+CAD-derived public metadata
+Firmware Documentation
+Warranty Policies
+Installation Guides
+```
+
+Flow:
+
+```text
+Question
+   ↓
+Product Identity
+   ↓
+RAG
+   ↓
+Technical Evidence
+   ↓
+AI Draft
+   ↓
+Human Review
+```
+
+---
+
+# 35. Shipping Integration
+
+```text
+Order
+ ↓
+Fulfillment Policy
+ ↓
+Marketplace Shipping Data
+ ↓
+ERP / WMS
+ ↓
+Warehouse
+ ↓
+Shipment
+ ↓
+Tracking
+ ↓
 Customer
 ```
 
-This is one of the principal differentiators of JFXAI4OHS.
+Marketplace-specific shipping semantics remain inside the Mercado Libre adapter.
 
 ---
 
-# Software Dependency Compendium
+# 36. Claims / Post-Sale Architecture
 
-The catalog should distinguish actual runtime dependencies from technologies included as references or integration candidates.
+```text
+Claim / Post-Sale Event
+        ↓
+Marketplace Adapter
+        ↓
+Case Management
+        ↓
+Product / Order Context
+        ↓
+AI Case Summary
+        ↓
+Human Support Agent
+        ↓
+Resolution
+```
 
-## B2B Commerce
+This can later integrate with the JFXAI4CRM project.
 
-| Technology | Function | Classification |
+---
+
+# 37. Cross-Project Integration with JFXAI4CRM
+
+```text
+JFXAI4OHS
+Marketplace Commerce
+      ↓
+Orders / Buyers / Interactions
+      ↓
+Canonical Event Bus
+      ↓
+JFXAI4CRM
+Customer 360
+      ↓
+Retention / Support / Sales Intelligence
+```
+
+Mercado Libre-specific details should not leak into CRM domain logic.
+
+---
+
+# 38. Cross-Project Integration with JFXBSC
+
+```text
+Mercado Libre Channel
+       ↓
+Commerce KPIs
+       ↓
+JFXBSC / OpenBSC AI
+       ↓
+Balanced Scorecard
+```
+
+Example KPIs:
+
+- marketplace revenue;
+- order volume;
+- conversion;
+- fulfillment performance;
+- cancellation rate;
+- claim rate;
+- inventory synchronization failures;
+- contribution margin;
+- channel ROI.
+
+---
+
+# 39. AI Commerce Orchestrator
+
+```text
+                        AI ORCHESTRATOR
+                              │
+       ┌──────────────┬───────┼───────────┬─────────────┐
+       ▼              ▼       ▼           ▼             ▼
+    Product       Supplier  Pricing     Order        Support
+     Agent         Agent     Agent       Agent         Agent
+       │              │       │           │             │
+       └──────────────┴───────┼───────────┴─────────────┘
+                              ▼
+                         Tool Gateway
+                              │
+          ┌───────────────────┼────────────────────┐
+          ▼                   ▼                    ▼
+      Internal API      Mercado Libre MCP    Marketplace API
+```
+
+---
+
+# 40. MCP Gateway
+
+The internal MCP gateway should register external services with explicit capability metadata.
+
+```yaml
+mcp_server:
+  id: mercadolibre_official
+  type: remote
+  endpoint: https://mcp.mercadolibre.com/mcp
+  auth: oauth2
+  trust: external_vendor
+  capabilities:
+    - search_documentation
+    - get_documentation_page
+```
+
+This configuration can expand when Mercado Libre officially adds new tools.
+
+---
+
+# 41. Dynamic Tool Discovery
+
+A future-compatible architecture should not hard-code the Mercado Libre tool surface.
+
+```text
+MCP Server
+    ↓
+tools/list
+    ↓
+Capability Registry
+    ↓
+Policy Filter
+    ↓
+Agent Tool Catalog
+```
+
+New tools should require:
+
+- schema validation;
+- security review;
+- write/read classification;
+- authorization policy;
+- human-in-the-loop rules.
+
+---
+
+# 42. Tool Risk Classes
+
+```text
+READ-ONLY DOCUMENTATION
+Low risk
+
+READ-ONLY SELLER DATA
+Moderate risk
+
+WRITE PRODUCT / STOCK / PRICE
+High operational risk
+
+CANCEL / REFUND / CLAIM ACTION
+High financial / customer risk
+```
+
+Recommended policy:
+
+```text
+Low risk
+→ automatic use permitted
+
+Moderate risk
+→ role authorization
+
+High risk
+→ explicit human confirmation
+```
+
+---
+
+# 43. Human-in-the-Loop Policy
+
+```text
+AI Suggestion
+     ↓
+Tool Risk Classification
+     ↓
+Policy Engine
+     ↓
+Human Approval if Required
+     ↓
+Marketplace Action
+```
+
+Require explicit approval for:
+
+- listing creation;
+- price changes;
+- stock reductions beyond policy;
+- listing deletion;
+- order cancellation;
+- claims resolution;
+- refunds;
+- financial actions.
+
+---
+
+# 44. OAuth Architecture
+
+```text
+User / Service
+      ↓
+Mercado Libre OAuth
+      ↓
+Authorized Session / Token
+      ↓
+Credential Vault
+      ↓
+Marketplace Adapter / MCP Client
+```
+
+Controls:
+
+- never place secrets in source control;
+- use secret management;
+- isolate credentials per tenant/account;
+- audit authorization;
+- implement token lifecycle according to current Mercado Libre guidance.
+
+---
+
+# 45. Multi-Tenant Marketplace Integration
+
+```text
+Tenant A
+  └── Mercado Libre Account A
+
+Tenant B
+  └── Mercado Libre Account B
+
+Tenant C
+  └── No Mercado Libre Connection
+```
+
+Never share marketplace credentials across tenants.
+
+---
+
+# 46. Security Boundary
+
+```text
+External MCP / API
+       ↓
+Zero-Trust Integration Gateway
+       ↓
+Schema Validation
+       ↓
+Policy Enforcement
+       ↓
+Canonical Domain
+       ↓
+JFXAI4OHS
+```
+
+Recommended controls:
+
+- OAuth2;
+- TLS;
+- RBAC;
+- ABAC;
+- request validation;
+- response schema validation;
+- audit logs;
+- secrets vault;
+- rate limiting;
+- timeout/circuit breaker;
+- retry policy;
+- data minimization.
+
+---
+
+# 47. Prompt-Injection Defense
+
+Documentation returned through MCP is still external content.
+
+Recommended agent architecture:
+
+```text
+External Documentation
+       ↓
+Content Boundary
+       ↓
+Instruction Sanitization
+       ↓
+Trusted System Policy
+       ↓
+Agent Reasoning
+```
+
+Never allow external text to override:
+
+- system policy;
+- credential controls;
+- tool authorization;
+- approval requirements.
+
+---
+
+# 48. Provenance
+
+Every marketplace-derived fact used by AI should retain its source.
+
+```yaml
+provenance:
+  provider: mercadolibre
+  source_type: api
+  site_id: MLA
+  retrieved_at: "..."
+  resource_id: "..."
+  adapter_version: "..."
+```
+
+Documentation provenance:
+
+```yaml
+provenance:
+  provider: mercadolibre
+  source_type: mcp_documentation
+  tool: search_documentation
+  retrieved_at: "..."
+  path: "..."
+```
+
+---
+
+# 49. FACT vs INFERENCE
+
+```text
+MARKETPLACE FACT
+Returned by Mercado Libre API
+
+DOCUMENTATION FACT
+Returned by official Mercado Libre MCP/docs
+
+INTERNAL FACT
+ERP / JFXAI4OHS data
+
+INFERENCE
+AI interpretation
+
+PREDICTION
+ML forecast
+
+RECOMMENDATION
+Proposed business action
+```
+
+Do not merge these categories.
+
+---
+
+# 50. Event-Driven Integration
+
+Recommended events:
+
+```text
+MarketplaceConnectionAuthorized
+ProductMapped
+ListingPublished
+ListingUpdated
+InventorySynchronized
+PriceChanged
+OrderReceived
+OrderUpdated
+ShipmentUpdated
+QuestionReceived
+ClaimReceived
+SellerSignalUpdated
+MarketplaceSyncFailed
+```
+
+---
+
+# 51. Event Bus Architecture
+
+```text
+Mercado Libre
+      ↓
+Adapter
+      ↓
+Canonical Event
+      ↓
+Kafka / Redpanda / RabbitMQ
+      ↓
+┌───────────┬───────────┬────────────┐
+▼           ▼           ▼            ▼
+Orders    Inventory     CRM          BI
+```
+
+Use the project's preferred event platform; do not make one broker mandatory.
+
+---
+
+# 52. ERP Integration
+
+Existing JFXAI4OHS ERP targets include:
+
+- Odoo;
+- Tryton;
+- Frappe / ERPNext;
+- OpenERP references.
+
+Extended architecture:
+
+```text
+Mercado Libre
+      ↓
+Marketplace Adapter
+      ↓
+Canonical Commerce Model
+      ↓
+ERP Adapter
+      ↓
+Odoo / Tryton / ERPNext
+```
+
+---
+
+# 53. ERP Source-of-Truth Matrix
+
+| Data Domain | Preferred Authority |
+|---|---|
+| Product master | ERP/PIM |
+| Technical product data | JFXAI4OHS engineering catalog |
+| Marketplace listing | Mercado Libre channel record |
+| Inventory | ERP/WMS |
+| Orders | Canonical commerce + ERP |
+| Accounting | ERP |
+| Marketplace reputation | Mercado Libre |
+| CAD/BOM | Engineering PLM/JFXAI4OHS |
+| AI recommendation | AI layer, never source of truth |
+
+---
+
+# 54. PIM Layer
+
+For industrial commerce, introduce a Product Information Management boundary:
+
+```text
+Engineering Data
+      ↓
+PIM
+      ↓
+Canonical Product
+      ↓
+Channel Mappers
+  ┌─────┼──────┐
+  ▼     ▼      ▼
+Web   B2B     Mercado Libre
+```
+
+---
+
+# 55. PIM Validation
+
+Before publishing externally:
+
+```text
+Product Draft
+     ↓
+Required Attribute Validation
+     ↓
+Category Validation
+     ↓
+Commercial Policy
+     ↓
+Safety / Compliance
+     ↓
+Marketplace Mapping
+     ↓
+Human Approval
+     ↓
+Publish
+```
+
+---
+
+# 56. Marketplace Connector Interface
+
+Pseudo-contract:
+
+```typescript
+interface MarketplaceConnector {
+  provider(): string;
+  capabilities(): Promise<MarketplaceCapabilities>;
+
+  authenticate(): Promise<AuthState>;
+
+  listProducts(filter?: ProductFilter): Promise<ProductRef[]>;
+  getProduct(id: string): Promise<MarketplaceProduct>;
+
+  syncProduct(product: CanonicalProduct): Promise<SyncResult>;
+  syncInventory(stock: InventoryUpdate[]): Promise<SyncResult>;
+  syncPrices(prices: PriceUpdate[]): Promise<SyncResult>;
+
+  listOrders(filter?: OrderFilter): Promise<CanonicalOrder[]>;
+  getOrder(id: string): Promise<CanonicalOrder>;
+}
+```
+
+Implementation:
+
+```text
+MercadoLibreConnector
+```
+
+---
+
+# 57. MCP Documentation Client
+
+Separate from the runtime connector:
+
+```typescript
+interface MarketplaceDocumentationProvider {
+  searchDocumentation(
+    query: string,
+    language: string,
+    siteId?: string
+  ): Promise<DocumentationResult[]>;
+
+  getDocumentationPage(
+    path: string,
+    language: string,
+    siteId?: string
+  ): Promise<DocumentationPage>;
+}
+```
+
+Implementation:
+
+```text
+MercadoLibreMcpDocumentationProvider
+```
+
+---
+
+# 58. Why Separate the Two Interfaces
+
+```text
+MercadoLibreMcpDocumentationProvider
+         ≠
+MercadoLibreConnector
+```
+
+The first helps the developer/agent understand integration specifications.
+
+The second performs production marketplace operations.
+
+This separation makes the project accurate against the current official MCP tool surface.
+
+---
+
+# 59. Automated Integration Maintenance
+
+A valuable JFXAI4OHS workflow:
+
+```text
+Scheduled Compatibility Check
+       ↓
+Mercado Libre MCP Documentation
+       ↓
+Compare API Guidance
+       ↓
+Integration Contract Tests
+       ↓
+Detect Breaking Change
+       ↓
+GitHub Issue
+       ↓
+Developer Review
+```
+
+---
+
+# 60. Documentation Drift Agent
+
+```text
+Integration Code
+      ↓
+Referenced API Paths
+      ↓
+Mercado Libre MCP Documentation Search
+      ↓
+Current Official Documentation
+      ↓
+Diff / Compatibility Analysis
+      ↓
+Alert
+```
+
+This is an especially strong use case for the official MCP server.
+
+---
+
+# 61. Code Generation Agent
+
+```text
+Feature Request
+      ↓
+Mercado Libre Documentation MCP
+      ↓
+Retrieve Current Guidance
+      ↓
+Generate Adapter Code
+      ↓
+Static Analysis
+      ↓
+Unit Tests
+      ↓
+Sandbox / Test Account
+      ↓
+Human Review
+```
+
+---
+
+# 62. Testing Strategy
+
+## Unit Tests
+
+Test:
+
+- mappings;
+- normalization;
+- price policy;
+- inventory policy;
+- error conversion;
+- tool schemas.
+
+## Contract Tests
+
+Test:
+
+```text
+JFXAI4OHS ↔ Mercado Libre Adapter
+```
+
+## MCP Tests
+
+Test:
+
+```text
+MCP connection
+tool discovery
+search_documentation
+get_documentation_page
+OAuth flow
+```
+
+## Integration Tests
+
+Use authorized test/sandbox mechanisms supported by Mercado Libre.
+
+---
+
+# 63. Resilience
+
+```text
+Marketplace Request
+      ↓
+Timeout
+      ↓
+Retry Policy
+      ↓
+Circuit Breaker
+      ↓
+Dead-Letter / Retry Queue
+      ↓
+Operational Alert
+```
+
+Avoid infinite retries.
+
+---
+
+# 64. Observability
+
+Recommended telemetry:
+
+```text
+marketplace_request_count
+marketplace_request_latency
+marketplace_error_rate
+mcp_tool_latency
+mcp_tool_error_rate
+inventory_sync_lag
+price_sync_failures
+order_import_lag
+mapping_failures
+oauth_refresh_failures
+```
+
+---
+
+# 65. Audit Trail
+
+```yaml
+audit_event:
+  action: inventory_sync
+  provider: mercadolibre
+  product_id: OHS-00192
+  external_item_id: "..."
+  old_value: 95
+  new_value: 80
+  actor: system
+  approved_by: policy
+  timestamp: "..."
+```
+
+---
+
+# 66. AI Agent Permissions
+
+Example:
+
+```yaml
+agent:
+  id: marketplace_product_agent
+  permissions:
+    mcp:
+      mercadolibre:
+        - search_documentation
+        - get_documentation_page
+    commerce:
+      - read_product
+      - draft_listing
+      - validate_mapping
+  prohibited:
+    - publish_without_approval
+    - change_price_without_policy
+    - delete_listing
+```
+
+---
+
+# 67. Procurement Permissions
+
+```text
+Procurement Agent
+✓ search internal catalog
+✓ compare supplier data
+✓ prepare RFQ
+✓ retrieve marketplace data where permitted
+✓ recommend supplier
+
+✗ autonomous purchase
+✗ autonomous payment
+✗ bypass purchasing approval
+```
+
+---
+
+# 68. Auction Integration
+
+JFXAI4OHS should retain its own auction/negotiation engine.
+
+```text
+Supplier Candidates
+       ↓
+JFXAI4OHS Auction Engine
+       ↓
+Bid Evaluation
+       ↓
+Winning Offer
+```
+
+Mercado Libre can contribute external price/product context but should not replace specialized B2B procurement logic.
+
+---
+
+# 69. Local AI Integration
+
+Optional architecture:
+
+```text
+Mercado Libre Data
+        ↓
+Data Policy
+        ↓
+Canonical Commerce Context
+        ↓
+Local LLM / gpt-oss
+        ↓
+Product / Procurement / Support Agent
+```
+
+Benefits:
+
+- lower exposure of internal procurement data;
+- private reasoning;
+- local RAG;
+- controlled model deployment.
+
+---
+
+# 70. RAG Architecture
+
+```text
+Internal Catalog
+Datasheets
+Contracts
+Supplier Policies
+Marketplace Integration Docs
+Public Product Manuals
+        ↓
+Ingestion
+        ↓
+Embeddings
+        ↓
+Qdrant
+        ↓
+AI Commerce Agent
+```
+
+The Mercado Libre MCP server should remain a live source for current integration documentation rather than being blindly copied into a permanent vector index.
+
+---
+
+# 71. MCP + RAG Hybrid
+
+```text
+Stable Internal Knowledge
+        ↓
+Local RAG
+        │
+        ├──────────────┐
+        ▼              ▼
+Internal Answer   Current Marketplace Question
+                       ↓
+                Mercado Libre MCP
+                       ↓
+                Current Documentation
+                       ↓
+                 Combined Context
+```
+
+---
+
+# 72. Recommended Technology Stack
+
+| Layer | Technology |
+|---|---|
+| B2B Commerce | Frappe Webshop / Broadleaf / Odoo |
+| ERP | ERPNext / Odoo / Tryton |
+| Database | PostgreSQL |
+| Vector DB | Qdrant |
+| Search | OpenSearch |
+| API | FastAPI / REST / GraphQL |
+| Events | Redpanda / Kafka / RabbitMQ |
+| Agent Integration | MCP |
+| Marketplace Documentation | Official Mercado Libre MCP |
+| Marketplace Runtime | Mercado Libre API Adapter |
+| Identity | Keycloak / OIDC |
+| Secrets | Vault / Kubernetes Secrets |
+| Containers | Docker |
+| Orchestration | Kubernetes / k3s |
+| BI | Superset / Metabase / Grafana |
+| Observability | OpenTelemetry / Prometheus / Grafana |
+
+---
+
+# 73. Software Dependency Classification
+
+| Component | Role | Classification |
 |---|---|---|
-| Frappe Webshop | E-commerce | Core Candidate |
+| Mercado Libre MCP Server | Official developer documentation MCP | External Integration |
+| Mercado Libre API | Marketplace runtime | External Integration |
+| MercadoLibreAdapter | Canonical marketplace bridge | Core Integration |
+| MCP Gateway | Agent tool gateway | Core |
+| Frappe Webshop | Commerce platform | Core Candidate |
 | Broadleaf Commerce | Java commerce | Core Candidate |
 | Odoo | ERP/e-commerce | Core Candidate |
-| PrestaShop | E-commerce | Optional |
+| ERPNext | ERP | Core Candidate |
 | Tryton | ERP | Optional |
-| OpenERP | ERP | Reference |
-| Prenda | J2EE commerce/pawnshop | Reference |
+| JADE | Multi-agent auctions | Research/Core Candidate |
+| PostgreSQL | Transaction data | Core |
+| Qdrant | AI/RAG | Core |
+| OpenSearch | Search/analytics | Optional |
+| Superset/Metabase | BI | Optional |
 
 ---
 
-# Multi-Agent Commerce
+# 74. Mercado Libre MCP Classification
 
-| Technology | Function | Classification |
-|---|---|---|
-| JADE | Multi-agent framework | Research/Core Candidate |
-| Agent-based auction systems | Auctions | Research |
-| AI agents | Procurement automation | Research |
-
----
-
-# ERP and Business Management
-
-| Technology | Function |
-|---|---|
-| Odoo | ERP/Commerce |
-| ERPNext/Frappe ecosystem | ERP |
-| Tryton | ERP |
-| OpenERP | ERP |
-
----
-
-# Commerce Integration
-
-Potential interfaces:
-
-```text
-REST
-GraphQL
-Webhooks
-WebSocket
-Event Bus
-EDI
+```yaml
+dependency:
+  name: Mercado Libre MCP Server
+  source: https://github.com/mercadolibre/mercadolibre-mcp-server
+  endpoint: https://mcp.mercadolibre.com/mcp
+  owner: Mercado Libre
+  classification: External Integration
+  protocol: MCP
+  auth: OAuth 2.0
+  current_tools:
+    - search_documentation
+    - get_documentation_page
+  production_role:
+    - developer documentation
+    - integration guidance
+    - current API discovery
 ```
 
-Potential integration targets:
-
-- ERP;
-- CRM;
-- logistics;
-- payment providers;
-- tax systems;
-- inventory;
-- supplier systems.
-
 ---
 
-# Open Hardware Software Ecosystem
+# 75. Community MCP Extensions
 
-The hardware catalog may require software components including:
+Community MCP servers exist that expose broader seller-oriented tool sets.
 
-- firmware;
-- embedded operating systems;
-- device drivers;
-- robotics middleware;
-- simulation software;
-- CAD/CAM;
-- manufacturing tools.
-
-These should be cataloged separately from the commerce platform runtime.
-
----
-
-# Hardware Dependency Compendium
-
-Hardware should be categorized according to its role.
-
-| Category | Examples | Role |
-|---|---|---|
-| Embedded | nRF52, OLINUXINO | Product |
-| Compute | CORE-V, RISC-V | Product |
-| Robotics | OpenArm, OpenER | Product |
-| UAV | Pixhawk, CubePilot | Product |
-| Space | PyCubed | Product |
-| Automotive | AV4EV | Product |
-| Agriculture | Acorn Rover | Product |
-| Manufacturing | CNC, 3D printers | Production |
-| IoT | Sensors/controllers | Product |
-| POS | Open Kiosk | Retail |
-
----
-
-# Dependency Classification
-
-| Classification | Meaning |
-|---|---|
-| Core | Main platform candidate |
-| Runtime | Required by implementation |
-| Optional | Replaceable component |
-| Integration | External system |
-| Research | Experimental |
-| Hardware | Physical product/system |
-| Firmware | Embedded software |
-| Reference | Catalog/reference |
-| Development | Developer tooling |
-| Testing | QA/testing |
-| Legacy | Historical technology |
-
----
-
-# Recommended Technology Stack
-
-A practical implementation could use:
+They may be useful as:
 
 ```text
-Frontend
- ├── React / Next.js
- └── B2B Portal
+Research
+Reference Implementation
+Prototype
+Compatibility Study
+```
 
-API
- ├── FastAPI
- ├── Spring Boot
- └── GraphQL
+They should **not** be described as official Mercado Libre capabilities unless maintained and documented by Mercado Libre.
 
+Recommended classification:
+
+```text
+Community Mercado Libre MCP
+→ Research / Optional
+```
+
+---
+
+# 76. Future Official MCP Expansion
+
+The architecture anticipates future tools such as:
+
+```text
+list_orders
+list_questions
+get_seller_reputation
+get_product
+update_stock
+update_price
+```
+
+but these should only be enabled in the official adapter after Mercado Libre publishes them.
+
+---
+
+# 77. Future Tool Activation Flow
+
+```text
+Official MCP adds new tool
+        ↓
+Capability Discovery
+        ↓
+Security Classification
+        ↓
+Schema Tests
+        ↓
+Policy Mapping
+        ↓
+Sandbox Validation
+        ↓
+Enable for Agents
+```
+
+---
+
+# 78. Marketplace-Agnostic Architecture
+
+```text
+                    Marketplace API
+                         │
+        ┌────────────────┼────────────────┐
+        ▼                ▼                ▼
+ Mercado Libre       Marketplace B    Marketplace C
+        │                │                │
+        └────────────────┼────────────────┘
+                         ▼
+                 Canonical Commerce
+                         ▼
+                     JFXAI4OHS
+```
+
+Mercado Libre becomes one provider, not the domain model.
+
+---
+
+# 79. Marketplace Provider Registry
+
+```yaml
+providers:
+  - id: mercadolibre
+    type: marketplace
+    region: latam
+    mcp:
+      endpoint: https://mcp.mercadolibre.com/mcp
+      purpose: developer_documentation
+    runtime:
+      type: rest_api_adapter
+
+  - id: internal_b2b
+    type: native
+    region: global
+```
+
+---
+
+# 80. Business Strategy
+
+Mercado Libre can provide JFXAI4OHS with:
+
+- LATAM channel access;
+- product visibility;
+- sales channel diversification;
+- external pricing signals;
+- supplier discovery context;
+- market validation;
+- transaction volume;
+- regional marketplace integration experience.
+
+JFXAI4OHS contributes:
+
+- B2B procurement;
+- complex RFQ;
+- engineering products;
+- open hardware;
+- multi-agent negotiation;
+- ERP integration;
+- manufacturing lifecycle;
+- AI product intelligence.
+
+---
+
+# 81. Open Hardware Commercialization Strategy
+
+```text
+Open Hardware Repository
+       ↓
+Engineering Validation
+       ↓
+Commercial Productization
+       ↓
+JFXAI4OHS Catalog
+       ↓
+Marketplace Readiness
+       ↓
+Mercado Libre Channel
+       ↓
+Regional Customers
+```
+
+---
+
+# 82. Product Readiness Gate
+
+Before an open-hardware product reaches an external marketplace:
+
+```text
+Design Complete
+      ↓
+Safety Review
+      ↓
+Manufacturing Readiness
+      ↓
+Documentation Complete
+      ↓
+Support Plan
+      ↓
+Commercial Pricing
+      ↓
+Marketplace Mapping
+      ↓
+Publish
+```
+
+---
+
+# 83. B2B-to-B2C Bridge
+
+JFXAI4OHS can support both:
+
+```text
+Industrial B2B
+        ↓
+Bulk / RFQ / Contract
+
+and
+
+Marketplace Channel
+        ↓
+Standardized Product Sale
+```
+
+Same engineering catalog, different commercial workflow.
+
+---
+
+# 84. Financial Architecture
+
+```text
+Marketplace Order
+       ↓
+Payment Reference
+       ↓
+Order Ledger
+       ↓
+ERP Accounting
+       ↓
+Reconciliation
+       ↓
+Channel Profitability
+```
+
+Payment handling should remain isolated from AI agents.
+
+---
+
+# 85. Optional Mercado Pago Boundary
+
+Future architecture may add Mercado Pago as a separate payment integration:
+
+```text
 Commerce
- ├── Broadleaf
- ├── Frappe
- └── Odoo
-
-AI
- ├── LLM
- ├── RAG
- ├── Embeddings
- └── Agent Framework
-
-Data
- ├── PostgreSQL
- ├── Redis
- └── Object Storage
-
-Integration
- ├── REST
- ├── GraphQL
- ├── Webhooks
- └── Event Bus
-
-Infrastructure
- ├── Docker
- └── Kubernetes
-
-Observability
- ├── OpenTelemetry
- ├── Prometheus
- └── Grafana
-
-Engineering
- ├── Capella
- ├── CAD
- ├── CAM
- └── CAS
+   ↓
+Payment Gateway Adapter
+   ↓
+Mercado Pago
 ```
+
+Do not assume the Mercado Libre MCP server automatically provides Mercado Pago transaction functionality.
 
 ---
 
-# Data Architecture
+# 86. BI Metrics
+
+Marketplace dashboard:
 
 ```text
-                    B2B Users
-                       │
-                       ▼
-                Commerce Portal
-                       │
-                       ▼
-                 API Gateway
-                       │
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
-     Catalog        Orders        Procurement
-        │              │              │
-        └──────────────┼──────────────┘
-                       ▼
-                  Business Data
-                       │
-       ┌───────────────┼───────────────┐
-       ▼               ▼               ▼
-      ERP             CRM           Analytics
-       │               │               │
-       └───────────────┼───────────────┘
-                       ▼
-                     AI
+Revenue
+Orders
+Units Sold
+Average Order Value
+Gross Margin
+Channel Fees
+Cancellation Rate
+Claim Rate
+Stockout Rate
+Inventory Sync Lag
+Listing Error Rate
+Order Import Lag
 ```
 
 ---
 
-# AI Architecture
+# 87. BSC Integration
 
 ```text
-                    User
-                      │
-                      ▼
-                AI Assistant
-                      │
-        ┌─────────────┼─────────────┐
-        ▼             ▼             ▼
-    Product AI    Supplier AI   Procurement AI
-        │             │             │
-        └─────────────┼─────────────┘
-                      ▼
-                Recommendation
-                      │
-                      ▼
-                 Human Review
-                      │
-                      ▼
-                  Commerce
+Marketplace Metrics
+       ↓
+JFXBSC Semantic Metrics
+       ↓
+Objectives
+       ↓
+Initiatives
+       ↓
+Strategic Review
 ```
 
-For high-value B2B transactions, AI should remain **decision-support software unless explicit authorization policies permit autonomous actions**.
+Example strategic objective:
+
+```yaml
+objective:
+  name: Expand LATAM Digital Sales
+  kpis:
+    - marketplace_revenue
+    - contribution_margin
+    - order_growth
+    - fulfillment_rate
+```
 
 ---
 
-# Security
+# 88. MVP Architecture
 
-Security requirements include:
-
-- tenant isolation;
-- role-based access;
-- company-level permissions;
-- API authentication;
-- encryption;
-- audit trails;
-- secure secrets;
-- supplier verification;
-- product provenance;
-- document integrity.
-
-B2B transactions should support:
-
-- approval workflows;
-- purchase limits;
-- segregation of duties;
-- quotation audit trails;
-- order authorization.
-
----
-
-# User Guide
-
-## Buyer Workflow
+Start small:
 
 ```text
-1. Create organization
-2. Invite users
-3. Define purchasing roles
-4. Search catalog
-5. Compare suppliers
-6. Configure product
-7. Request quotation
-8. Negotiate
-9. Approve purchase
-10. Place order
-11. Track delivery
-12. Complete transaction
+JFXAI4OHS
+   ↓
+Canonical Product API
+   ↓
+MercadoLibreAdapter
+   ↓
+Mercado Libre API
+
+Developer Agent
+   ↓
+Official Mercado Libre MCP
 ```
 
-## Supplier Workflow
+MVP capabilities:
+
+- MCP connection;
+- documentation search;
+- documentation retrieval;
+- OAuth setup;
+- product/category integration research;
+- one read-only marketplace API workflow;
+- canonical product mapping;
+- audit logs;
+- contract tests.
+
+---
+
+# 89. MVP Phase 1 — Documentation MCP
+
+Implement:
+
+- MCP gateway;
+- remote Mercado Libre MCP connection;
+- `search_documentation`;
+- `get_documentation_page`;
+- agent prompts;
+- provenance.
+
+---
+
+# 90. MVP Phase 2 — Read-Only Marketplace Adapter
+
+Implement only currently approved/readable resources required by the initial business use case.
+
+Examples:
 
 ```text
-1. Register organization
-2. Verify company
-3. Create catalog
-4. Configure prices
-5. Define inventory
-6. Receive RFQs
-7. Submit quotation
-8. Negotiate
-9. Receive order
-10. Fulfill
-11. Invoice
+Product / Listing Read
+Category Read
+Seller Context
 ```
+
+Exact endpoints should be selected from current official documentation.
 
 ---
 
-# Installation Guide
+# 91. MVP Phase 3 — Catalog Synchronization
 
-The BID-derived template requires explicit documentation of OS requirements, SDKs, compilers, package managers, internal/external dependencies, build procedures and tests.
-
-## Recommended Baseline
+Implement:
 
 ```text
-Linux x86_64
-Git
-Docker
-Python 3.11+
-Node.js 20+
-PostgreSQL 15+
-Java 17+
+Internal Product
+     ↓
+Mapping
+     ↓
+Validation
+     ↓
+Draft Marketplace Representation
+     ↓
+Human Approval
+     ↓
+Write API
 ```
 
-Optional:
+---
+
+# 92. MVP Phase 4 — Inventory & Orders
+
+Add:
 
 ```text
-Kubernetes
-Redis
-Kafka / Redpanda
-Object Storage
-GPU
-```
-
-## Clone Repository
-
-```bash
-git clone https://github.com/robotics-intelligent-systems/jfxai4ohs.git
-cd jfxai4ohs
-```
-
-## Container Environment
-
-```bash
-docker build -t jfxai4ohs:latest .
+Inventory Sync
+Order Import
+ERP Integration
+Event Bus
 ```
 
 ---
 
-# Dependencies
+# 93. MVP Phase 5 — AI Agent
 
-Each production dependency should document:
+Add:
 
-| Field | Description |
-|---|---|
-| Name | Software name |
-| Version | Tested version |
-| Purpose | Function |
-| License | Open-source/commercial license |
-| URL | Official project |
-| Runtime | Runtime requirement |
-| Integration | API/SDK/adapter |
-| Security | Security considerations |
+```text
+Product Agent
+Supplier Agent
+Support Agent
+```
 
-The current repository should not represent the entire technology inventory as mandatory dependencies; the catalog contains both commerce technologies and open-hardware reference projects.
+All write operations remain policy-controlled.
 
 ---
 
-# Testing and Validation
+# 94. MVP Phase 6 — Open Hardware
 
-## Commerce
+Add:
 
-- catalog tests;
-- pricing tests;
-- order tests;
-- inventory tests;
-- RFQ tests;
-- auction tests.
-
-## AI
-
-- recommendation accuracy;
-- product classification;
-- supplier ranking;
-- hallucination tests;
-- prompt injection tests.
-
-## Integration
-
-- ERP;
-- payment;
-- logistics;
-- inventory;
-- supplier APIs.
-
-## Engineering
-
-- CAD validation;
-- CAM validation;
-- simulation;
-- BOM validation.
+- BOM metadata;
+- technical documents;
+- digital product passport;
+- configurable-product mapping;
+- public/private engineering data separation.
 
 ---
 
-# Repository Structure
+# 95. MVP Phase 7 — BI / BSC
+
+Add:
+
+- channel dashboards;
+- profitability;
+- fulfillment KPIs;
+- strategic objectives.
+
+---
+
+# 96. Recommended Repository Structure
 
 ```text
 jfxai4ohs/
-│
 ├── README.md
-├── LICENSE
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
 │
 ├── docs/
 │   ├── architecture/
-│   ├── user-guide/
-│   ├── installation/
-│   ├── commerce/
+│   ├── marketplace/
+│   │   └── mercadolibre/
+│   │       ├── architecture.md
+│   │       ├── mcp.md
+│   │       ├── oauth.md
+│   │       ├── mappings.md
+│   │       ├── security.md
+│   │       └── testing.md
 │   ├── procurement/
-│   ├── ai/
-│   ├── hardware/
-│   └── mbse/
+│   ├── open-hardware/
+│   └── ai/
 │
-├── compendium/
-│   ├── software/
-│   │   ├── commerce.md
-│   │   ├── ai.md
-│   │   ├── erp.md
-│   │   └── integrations.md
+├── integrations/
+│   ├── marketplace/
+│   │   ├── canonical/
+│   │   └── mercadolibre/
+│   │       ├── api/
+│   │       ├── mapper/
+│   │       ├── oauth/
+│   │       └── events/
 │   │
-│   └── hardware/
-│       ├── robotics.md
-│       ├── aerospace.md
-│       ├── automotive.md
-│       ├── agriculture.md
-│       ├── manufacturing.md
-│       └── embedded.md
+│   └── mcp/
+│       ├── gateway/
+│       └── mercadolibre/
 │
 ├── src/
+│   ├── commerce/
 │   ├── catalog/
-│   ├── marketplace/
 │   ├── procurement/
-│   ├── rfq/
-│   ├── auctions/
-│   ├── orders/
-│   ├── suppliers/
-│   ├── inventory/
+│   ├── marketplace/
 │   ├── ai/
-│   ├── integrations/
-│   └── analytics/
+│   ├── agents/
+│   └── events/
+│
+├── schemas/
+│   ├── marketplace-provider.yaml
+│   ├── marketplace-product.yaml
+│   ├── canonical-order.yaml
+│   └── product-mapping.yaml
 │
 ├── tests/
-│
-├── notebooks/
-│
-├── docker/
-│
-├── k8s/
+│   ├── mercadolibre/
+│   ├── mcp/
+│   ├── marketplace/
+│   ├── security/
+│   └── contract/
 │
 └── MBSE/
-    ├── Arcadia/
+    ├── Capella/
     ├── CAD/
     ├── CAM/
     └── CAS/
@@ -1153,286 +2353,696 @@ jfxai4ohs/
 
 ---
 
-# Development Workflow
+# 97. MBSE → CAD → CAM → CAS
 
 ```text
-Business Requirement
-        ↓
-B2B Use Case
-        ↓
-Domain Model
-        ↓
-Architecture
-        ↓
-Implementation
-        ↓
-Integration
-        ↓
-Testing
-        ↓
-Deployment
-```
-
-For industrial products:
-
-```text
-Requirement
-    ↓
 MBSE
-    ↓
+Marketplace integration requirements
+System boundaries
+Trust model
+        ↓
 CAD
-    ↓
+Product/catalog model
+Marketplace mapping
+Workflow design
+        ↓
 CAM
-    ↓
+Commerce services
+Adapters
+Deployment
+        ↓
 CAS
-    ↓
-BOM
-    ↓
-Product Catalog
-    ↓
-Quotation
-    ↓
-Purchase
+Marketplace simulations
+Catalog validation
+Order load tests
+Agent-policy tests
+Failure scenarios
+        ↓
+Production
 ```
 
 ---
 
-# Contribution
+# 98. CAS Scenarios
 
-Contributions are welcome in:
+Simulate:
 
-- B2B commerce;
-- AI;
-- ERP;
-- procurement;
-- auctions;
-- integrations;
-- open hardware;
-- robotics;
-- aerospace;
-- automotive;
-- agriculture;
-- manufacturing;
-- CAD/CAM/CAS;
-- MBSE.
+- marketplace unavailable;
+- OAuth expired;
+- price update rejected;
+- inventory conflict;
+- duplicate order;
+- category mapping failure;
+- retry storm;
+- partial ERP outage;
+- AI generates invalid listing content;
+- MCP documentation service unavailable.
 
-Every new software component should document:
+---
+
+# 99. Failure Mode — MCP Unavailable
+
+The production commerce path must continue:
 
 ```text
-Name
-Version
-Purpose
-License
-URL
-Integration
-Classification
+Mercado Libre MCP unavailable
+          ↓
+Developer assistance degraded
+          ↓
+Runtime Marketplace Adapter unaffected
 ```
 
-Every new hardware component should document:
+This is another reason to separate documentation MCP from transaction APIs.
+
+---
+
+# 100. Failure Mode — Marketplace API Unavailable
+
+```text
+API unavailable
+      ↓
+Circuit breaker
+      ↓
+Queue pending operations
+      ↓
+Operational alert
+      ↓
+Retry according to policy
+```
+
+Never invent successful marketplace writes.
+
+---
+
+# 101. Agent Fallback
+
+```text
+MCP unavailable
+     ↓
+Use cached internal integration documentation
+     ↓
+Mark potentially stale
+     ↓
+Require verification before code change
+```
+
+---
+
+# 102. DevSecOps
+
+Pipeline:
+
+```text
+Commit
+ ↓
+Static Analysis
+ ↓
+Unit Tests
+ ↓
+Schema Tests
+ ↓
+MCP Contract Tests
+ ↓
+Marketplace Adapter Tests
+ ↓
+Security Tests
+ ↓
+Container Build
+ ↓
+SBOM
+ ↓
+Deploy
+```
+
+---
+
+# 103. Secret Handling
+
+Never commit:
+
+```text
+access_token
+refresh_token
+client_secret
+authorization_code
+session cookies
+```
+
+Use a dedicated secret store.
+
+---
+
+# 104. CI Test Credentials
+
+CI should use:
+
+- dedicated test application;
+- restricted scopes;
+- non-production seller/account;
+- short-lived credentials where possible;
+- masked logs.
+
+---
+
+# 105. Logging Policy
+
+Do not log:
+
+- access tokens;
+- refresh tokens;
+- payment secrets;
+- unnecessary customer PII.
+
+Log:
+
+- correlation IDs;
+- endpoint category;
+- response status;
+- latency;
+- retry count;
+- tenant;
+- operation type.
+
+---
+
+# 106. Privacy
+
+Marketplace customer data should be minimized to the business purpose.
+
+```text
+Marketplace Data
+       ↓
+Purpose Filter
+       ↓
+Canonical Order / Customer Reference
+       ↓
+ERP / CRM
+```
+
+Do not turn marketplace data into unrelated profiling data.
+
+---
+
+# 107. AI Safety
+
+AI may:
+
+- summarize;
+- classify;
+- recommend;
+- draft;
+- compare;
+- explain.
+
+AI should not autonomously:
+
+- issue refunds;
+- cancel paid orders;
+- change contractual terms;
+- publish unsafe products;
+- bypass marketplace policies;
+- modify prices outside policy.
+
+---
+
+# 108. Compliance-by-Design
+
+```text
+Marketplace Policy
+      ↓
+Integration Rules
+      ↓
+Code
+      ↓
+Automated Tests
+      ↓
+Runtime Enforcement
+```
+
+Use the official MCP documentation service to keep developer guidance close to current Mercado Libre requirements.
+
+---
+
+# 109. Marketplace Documentation as Live Dependency
+
+Treat documentation as:
+
+```text
+Dynamic External Knowledge
+```
+
+not as immutable application logic.
+
+Integration behavior should be implemented in version-controlled code and tested.
+
+---
+
+# 110. Community Reference Implementations
+
+There are community implementations of Mercado Libre MCP integrations with larger tool surfaces.
+
+They can be useful to study:
+
+- OAuth patterns;
+- seller tool design;
+- tool schemas;
+- HITL gates;
+- rate limiting;
+- error handling.
+
+But production decisions should be based on:
+
+```text
+Official Mercado Libre Documentation
++
+Approved APIs
++
+Security Review
+```
+
+---
+
+# 111. Future Agentic Commerce
+
+Long-term:
+
+```text
+Buyer Intent
+    ↓
+Procurement Agent
+    ↓
+Product Requirements
+    ↓
+Multi-Marketplace Search
+    ↓
+Supplier / Product Comparison
+    ↓
+Policy Evaluation
+    ↓
+Human Approval
+    ↓
+Purchase Workflow
+```
+
+---
+
+# 112. Industrial Agentic Commerce
+
+For industrial components:
+
+```text
+Engineering Requirement
+      ↓
+MBSE Requirement
+      ↓
+Technical Product Search
+      ↓
+Compatibility Check
+      ↓
+Supplier / Marketplace Discovery
+      ↓
+Cost / Lead-Time Evaluation
+      ↓
+Procurement Approval
+```
+
+This is a core differentiator of JFXAI4OHS.
+
+---
+
+# 113. Engineering Compatibility Agent
+
+```text
+System Requirement
+       ↓
+Required Interface / Voltage / Dimensions
+       ↓
+Candidate Product
+       ↓
+Technical Attribute Match
+       ↓
+CAD / BOM Compatibility
+       ↓
+Recommendation
+```
+
+Marketplace data alone is insufficient; the internal engineering catalog remains authoritative.
+
+---
+
+# 114. Open-Hardware Supply Chain
+
+```text
+Design
+  ↓
+BOM
+  ↓
+Components
+  ↓
+Supplier Sources
+  ↓
+Marketplace Channels
+  ↓
+Procurement
+  ↓
+Manufacturing
+```
+
+Mercado Libre can function as one source/channel within this graph.
+
+---
+
+# 115. Supply Risk Graph
+
+```text
+Component
+  ├── Supplier A
+  ├── Supplier B
+  └── Mercado Libre Offers
+         ↓
+Availability / Price / Geography
+         ↓
+Supply Risk
+```
+
+---
+
+# 116. Knowledge Graph
+
+Potential entities:
 
 ```text
 Product
-Manufacturer / Project
-Processor
-Memory
-Connectivity
-Power
-Interfaces
-Firmware
-CAD
+Component
+Supplier
+Marketplace
+Listing
+Order
+Manufacturer
+CAD Model
 BOM
-License
-Manufacturing Information
+Certification
+Category
+Site
 ```
 
----
-
-# Code of Conduct
-
-Contributors should maintain a professional and inclusive environment.
-
-The project should not accept:
-
-- malicious components;
-- hidden telemetry;
-- unauthorized access mechanisms;
-- counterfeit product data;
-- fraudulent supplier information;
-- intentionally insecure integrations.
-
----
-
-# Authors
-
-**Robotics Intelligent Systems**
-
-Repository:
-
-https://github.com/robotics-intelligent-systems/jfxai4ohs
-
----
-
-# Additional Information
-
-The repository's existing scope is particularly suitable for connecting **digital commerce with physical engineering products**.
-
-Its architecture can therefore evolve beyond conventional B2B e-commerce toward:
+Relations:
 
 ```text
-Digital Marketplace
-        +
-Industrial Procurement
-        +
-Open Hardware
-        +
-Engineering
-        +
-Manufacturing
-        +
-AI
+Product HAS_COMPONENT Component
+Supplier OFFERS Product
+Product LISTED_ON Marketplace
+Listing MAPS_TO Product
+Product HAS_CAD CADModel
+Product HAS_CERTIFICATION Certification
 ```
-
-This creates a potential **Industrial Open-Commerce Platform**.
-
-The MBSE/CAD/CAM/CAS structure already present in the repository provides an architectural foundation for this direction.
 
 ---
 
-# License
-
-The project should declare its actual license in:
+# 117. AI Product Matching
 
 ```text
-LICENSE
+Natural Language Need
+       ↓
+Structured Requirements
+       ↓
+Vector / Semantic Search
+       ↓
+Technical Filters
+       ↓
+Marketplace Candidates
+       ↓
+Rules
+       ↓
+Ranked Products
 ```
 
-Third-party software and hardware projects must retain their respective licenses and attribution requirements.
-
-The BID template's special liability disclaimer should not be copied into this project unless the project is actually financed by the BID, because the template explicitly limits that section to BID-funded tools.
-
 ---
 
-# Roadmap
-
-## Phase 1 — Documentation
-
-- [x] B2B commerce scope
-- [x] Software ecosystem classification
-- [x] Open hardware catalog
-- [x] MBSE/CAD/CAM/CAS integration model
-- [ ] Dependency version inventory
-- [ ] License inventory
-
-## Phase 2 — Commerce Platform
-
-- [ ] Multi-tenant organizations
-- [ ] Product catalog
-- [ ] Supplier portal
-- [ ] Buyer portal
-- [ ] RFQ
-- [ ] Orders
-- [ ] Inventory
-
-## Phase 3 — AI
-
-- [ ] AI product assistant
-- [ ] Semantic product search
-- [ ] Supplier recommendation
-- [ ] Product classification
-- [ ] Procurement assistant
-- [ ] AI negotiation support
-
-## Phase 4 — Marketplace
-
-- [ ] Multi-vendor marketplace
-- [ ] Dynamic pricing
-- [ ] Reverse auctions
-- [ ] Supplier scoring
-- [ ] Contract management
-
-## Phase 5 — Industrial Commerce
-
-- [ ] CAD integration
-- [ ] BOM
-- [ ] Configurable products
-- [ ] Manufacturing integration
-- [ ] Digital product passport
-
-## Phase 6 — Cloud
-
-- [ ] Docker
-- [ ] Kubernetes
-- [ ] Multi-tenancy
-- [ ] Observability
-- [ ] Security
-- [ ] Enterprise deployment
-
----
-
-# Architectural Principles
-
-JFXAI4OHS should follow these principles:
-
-1. **B2B-first commerce**
-2. **Open-source interoperability**
-3. **AI-assisted procurement**
-4. **Human-controlled high-value transactions**
-5. **Multi-vendor architecture**
-6. **ERP interoperability**
-7. **Engineering-aware product catalogs**
-8. **Open hardware support**
-9. **Secure enterprise transactions**
-10. **Traceable product lifecycle**
-11. **Separation between catalog references and runtime dependencies**
-12. **MBSE-driven engineering integration**
-
----
-
-# Conclusion
-
-JFXAI4OHS can evolve from the current technology inventory into a comprehensive **AI-powered B2B commerce and industrial marketplace architecture**.
-
-Its distinctive value proposition is the combination of:
+# 118. Commercial vs Engineering Ranking
 
 ```text
-                 JFXAI4OHS
-                     │
-        ┌────────────┼────────────┐
-        ▼            ▼            ▼
-     COMMERCE       AI         HARDWARE
-        │            │            │
-        ▼            ▼            ▼
-   Procurement   Intelligence  Engineering
-        │            │            │
-        └────────────┼────────────┘
-                     ▼
-                 MBSE / CAD
-                     │
-                     ▼
-                CAM / CAS
-                     │
-                     ▼
-               MANUFACTURING
-                     │
-                     ▼
-               B2B MARKETPLACE
+Overall Product Fit
+      =
+Technical Compatibility
++ Availability
++ Price
++ Supplier Reliability
++ Delivery
++ Lifecycle Risk
 ```
 
-This architecture connects the **commercial lifecycle of a product** with its **engineering and physical lifecycle**.
+Technical compatibility should normally have hard constraints for engineering use cases.
 
-The resulting platform can therefore serve as a foundation for:
+---
 
-- B2B marketplaces;
-- industrial procurement;
-- open-hardware commerce;
-- AI-assisted sourcing;
-- supplier discovery;
-- engineering product catalogs;
-- configurable manufacturing;
-- robotics marketplaces;
-- aerospace component commerce;
-- automotive and EV components;
-- agricultural technology;
-- industrial IoT.
+# 119. Example Scenario
 
-The repository's existing combination of B2B commerce technologies, open hardware and MBSE/CAD/CAM/CAS makes this a natural architectural evolution of the project.
+User:
+
+```text
+"Find a Linux industrial computer for a robot,
+minimum 8 GB RAM, CAN bus, 12–24 V input,
+and availability in Argentina."
+```
+
+Flow:
+
+```text
+AI Product Agent
+       ↓
+Parse constraints
+       ↓
+Internal JFXAI4OHS Catalog
+       +
+Authorized Marketplace Search
+       ↓
+Technical Normalization
+       ↓
+Hard Constraint Validation
+       ↓
+Commercial Comparison
+       ↓
+Recommendation
+```
+
+---
+
+# 120. Example Development Scenario Using MCP
+
+Developer:
+
+```text
+"How should this adapter authenticate
+and retrieve the relevant marketplace resource?"
+```
+
+Flow:
+
+```text
+Coding Agent
+    ↓
+search_documentation
+    ↓
+get_documentation_page
+    ↓
+Current Mercado Libre Guidance
+    ↓
+Generate Code
+```
+
+---
+
+# 121. Recommended Component Priority
+
+| Component | Priority |
+|---|---:|
+| Canonical marketplace model | 5/5 |
+| Mercado Libre official MCP | 5/5 |
+| Mercado Libre REST adapter | 5/5 |
+| OAuth/security | 5/5 |
+| Product mapping | 5/5 |
+| Order integration | 5/5 |
+| Inventory sync | 5/5 |
+| ERP integration | 5/5 |
+| AI product agent | 4/5 |
+| Technical RAG | 4/5 |
+| Supplier intelligence | 4/5 |
+| Automated pricing | 3/5 |
+| Full autonomous purchasing | 1/5 |
+
+---
+
+# 122. Recommended Final Stack
+
+```text
+JFXAI4OHS
+   │
+   ├── Commerce Core
+   │     Frappe Webshop / Broadleaf / Odoo
+   │
+   ├── ERP
+   │     ERPNext / Odoo / Tryton
+   │
+   ├── Data
+   │     PostgreSQL
+   │
+   ├── Search
+   │     OpenSearch
+   │
+   ├── RAG
+   │     Qdrant
+   │
+   ├── Agents
+   │     MCP Tool Gateway
+   │
+   ├── Mercado Libre
+   │     ├── Official MCP Server
+   │     └── REST API Adapter
+   │
+   ├── Events
+   │     Kafka / Redpanda / RabbitMQ
+   │
+   └── BI
+         Superset / Metabase / Grafana
+```
+
+---
+
+# 123. Final Integrated Architecture
+
+```text
+┌──────────────────────────────────────────────────────────────────────┐
+│                             JFXAI4OHS                                │
+│                                                                      │
+│ B2B Commerce | Procurement | Open Hardware | Engineering Catalog     │
+└───────────────────────────────┬──────────────────────────────────────┘
+                                │
+                                ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│                    CANONICAL COMMERCE LAYER                          │
+│ Products | Suppliers | Listings | Orders | Inventory | Pricing      │
+└───────────────────────────────┬──────────────────────────────────────┘
+                                │
+            ┌───────────────────┼───────────────────┐
+            ▼                   ▼                   ▼
+       ERP Adapter          AI Agents        Marketplace Gateway
+            │                   │                   │
+            │                   │         ┌─────────┴─────────┐
+            │                   │         ▼                   ▼
+            │                   │  Mercado Libre MCP   Mercado Libre API
+            │                   │  Documentation       Runtime Adapter
+            │                   │         │                   │
+            │                   │         └─────────┬─────────┘
+            │                   │                   ▼
+            │                   │            Mercado Libre
+            │                   │
+            │                   ▼
+            │              RAG / Qdrant
+            │                   │
+            └───────────────────┼───────────────────┐
+                                ▼                   ▼
+                         PostgreSQL             BI / BSC
+```
+
+---
+
+# 124. Strategic Recommendation
+
+The recommended design is **not**:
+
+```text
+JFXAI4OHS
+   ↓
+Mercado Libre MCP
+   ↓
+Everything
+```
+
+because the current official MCP server does not expose the entire seller transaction surface.
+
+The recommended architecture is:
+
+```text
+JFXAI4OHS
+      +
+Canonical Marketplace Model
+      +
+Official Mercado Libre MCP
+for current developer documentation
+      +
+Mercado Libre REST/API Adapter
+for approved runtime operations
+      +
+OAuth
+      +
+ERP / Inventory / Orders
+      +
+AI Agents with Human Approval
+```
+
+This design is accurate against the current Mercado Libre MCP capabilities and is ready to adopt new official tools as Mercado Libre expands the server.
+
+---
+
+# 125. Key Design Principle
+
+> **Use the official Mercado Libre MCP server as a live, trusted integration-knowledge interface; use canonical JFXAI4OHS adapters for production marketplace operations; and activate new MCP transaction tools only after they are officially documented, security-reviewed, and policy-mapped.**
+
+---
+
+# 126. Current Official References
+
+## JFXAI4OHS
+
+- https://github.com/robotics-intelligent-systems/jfxai4ohs
+
+## Official Mercado Libre MCP Repository
+
+- https://github.com/mercadolibre/mercadolibre-mcp-server
+
+## Official MCP Endpoint
+
+- https://mcp.mercadolibre.com/mcp
+
+## Official Mercado Libre Developer Documentation
+
+- https://developers.mercadolibre.com.ar/mcp-server
+
+---
+
+# 127. Current Official MCP Tools
+
+As documented by Mercado Libre at the time of this architecture:
+
+```text
+search_documentation
+get_documentation_page
+```
+
+The tool surface may change over time.
+
+JFXAI4OHS should discover and validate current MCP tools rather than assuming a static list.
+
+---
+
+# 128. Disclaimer
+
+This document is an integration architecture proposal.
+
+Mercado Libre:
+
+- API capabilities;
+- MCP tools;
+- OAuth behavior;
+- site identifiers;
+- seller permissions;
+- rate limits;
+- marketplace policies;
+- transaction endpoints;
+
+may change over time.
+
+Production implementation must always verify current Mercado Libre documentation and authorization requirements.
+
+The official MCP server should not be represented as supporting seller write operations unless those tools are officially exposed and documented.
