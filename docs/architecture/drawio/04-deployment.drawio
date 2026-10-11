@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram id="04-deployment" name="Despliegue propuesto">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="900">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="client" value="Cliente HTTPS" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="edge" value="Proxy / ingreso" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="340" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="app" value="Aplicación modular" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="640" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="worker" value="Worker de integración" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="640" y="220" width="220" height="80" />
+        </mxCell>
+        <mxCell id="db" value="Base de datos privada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="940" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="queue" value="Cola privada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="940" y="220" width="220" height="80" />
+        </mxCell>
+        <mxCell id="vault" value="Almacén de secretos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="940" y="400" width="220" height="80" />
+        </mxCell>
+        <mxCell id="telemetry" value="Métricas y trazas" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="640" y="400" width="220" height="80" />
+        </mxCell>
+        <mxCell id="external" value="API externa autorizada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1240" y="220" width="220" height="80" />
+        </mxCell>
+        <mxCell id="e0" value="TLS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="client" target="edge">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="Sesión validada" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="edge" target="app">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="Red privada" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="app" target="db">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="Outbox" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="app" target="queue">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="Evento" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="queue" target="worker">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" value="Credenciales acotadas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="worker" target="vault">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e6" value="HTTPS saliente" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="worker" target="external">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e7" value="Sin tokens ni PII" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="worker" target="telemetry">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e8" value="Correlación" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="app" target="telemetry">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

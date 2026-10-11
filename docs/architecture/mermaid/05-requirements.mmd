@@ -1,0 +1,15 @@
+flowchart LR
+  need["Necesidad del interesado"]
+  req["Requisito con ID"]
+  review["Revisión y baseline"]
+  design["Componente / contrato"]
+  test["Caso de aceptación"]
+  evidence["Evidencia y aprobación"]
+  change["Solicitud de cambio"]
+  need -->|"Origen y prioridad"| req
+  req -->|"Criterio medible"| review
+  review -->|"Asignación"| design
+  design -->|"Verificación"| test
+  test -->|"Resultado"| evidence
+  evidence -->|"Desviación"| change
+  change -->|"Impacto y nueva versión"| review

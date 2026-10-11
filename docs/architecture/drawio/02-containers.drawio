@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram id="02-containers" name="Contenedores lógicos">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="900">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ui" value="Portal B2B" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="gateway" value="Entrada autenticada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="340" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="domain" value="Dominio comercial" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="640" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="policy" value="Política y aprobación" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="640" y="220" width="220" height="80" />
+        </mxCell>
+        <mxCell id="adapter" value="Adaptador marketplace" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="940" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="api" value="API Mercado Libre" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1240" y="40" width="220" height="80" />
+        </mxCell>
+        <mxCell id="data" value="Datos canónicos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="640" y="400" width="220" height="80" />
+        </mxCell>
+        <mxCell id="events" value="Outbox / cola" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="940" y="400" width="220" height="80" />
+        </mxCell>
+        <mxCell id="erp" value="Adaptador ERP" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1240" y="400" width="220" height="80" />
+        </mxCell>
+        <mxCell id="agent" value="Agentes / RAG" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="340" y="220" width="220" height="80" />
+        </mxCell>
+        <mxCell id="mcp" value="Cliente MCP documental" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="340" y="400" width="220" height="80" />
+        </mxCell>
+        <mxCell id="e0" value="Solicitud" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="ui" target="gateway">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="Identidad y tenant" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="gateway" target="domain">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="Autorizar comando" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="domain" target="policy">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="Comando aprobado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="policy" target="adapter">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="OAuth y REST" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="adapter" target="api">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" value="Persistencia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="domain" target="data">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e6" value="Outbox transaccional" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="data" target="events">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e7" value="Eventos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="events" target="erp">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e8" value="Propuesta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="agent" target="policy">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e9" value="Contexto documental" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=11;" edge="1" parent="1" source="agent" target="mcp">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

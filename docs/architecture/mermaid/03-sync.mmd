@@ -1,0 +1,20 @@
+flowchart LR
+  source["ERP: stock confirmado"]
+  outbox["Evento con versión"]
+  worker["Worker por tenant"]
+  policy["Permisos y capacidad"]
+  adapter["Adaptador REST"]
+  api["Marketplace"]
+  retry["Reintento acotado"]
+  dlq["Cola de fallos"]
+  audit["Auditoría / conciliación"]
+  source -->|"Commit"| outbox
+  outbox -->|"Entrega al menos una vez"| worker
+  worker -->|"Deduplicar y validar"| policy
+  policy -->|"Permitido"| adapter
+  adapter -->|"Actualizar stock"| api
+  api -->|"Resultado confirmado"| audit
+  adapter -->|"Timeout o error temporal"| retry
+  retry -->|"Backoff y límite"| worker
+  retry -->|"Agotamiento"| dlq
+  dlq -->|"Intervención y conciliación"| audit
