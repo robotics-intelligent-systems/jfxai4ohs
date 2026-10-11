@@ -1,0 +1,22 @@
+flowchart LR
+  ui["Portal B2B"]
+  gateway["Entrada autenticada"]
+  domain["Dominio comercial"]
+  policy["Política y aprobación"]
+  adapter["Adaptador marketplace"]
+  api["API Mercado Libre"]
+  data["Datos canónicos"]
+  events["Outbox / cola"]
+  erp["Adaptador ERP"]
+  agent["Agentes / RAG"]
+  mcp["Cliente MCP documental"]
+  ui -->|"Solicitud"| gateway
+  gateway -->|"Identidad y tenant"| domain
+  domain -->|"Autorizar comando"| policy
+  policy -->|"Comando aprobado"| adapter
+  adapter -->|"OAuth y REST"| api
+  domain -->|"Persistencia"| data
+  data -->|"Outbox transaccional"| events
+  events -->|"Eventos"| erp
+  agent -->|"Propuesta"| policy
+  agent -->|"Contexto documental"| mcp

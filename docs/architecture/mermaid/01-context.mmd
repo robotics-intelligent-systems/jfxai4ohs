@@ -1,0 +1,14 @@
+flowchart LR
+  buyer["Comprador / ingeniería"]
+  seller["Proveedor / operador"]
+  core["JFXAI4OHS"]
+  erp["ERP externo"]
+  api["Mercado Libre API"]
+  dev["Desarrollador"]
+  mcp["MCP documental externo"]
+  buyer -->|"Requisitos y compras"| core
+  seller -->|"Catálogo y pedidos"| core
+  core -->|"Adaptador ERP"| erp
+  core -->|"Adaptador REST autorizado"| api
+  dev -->|"Consulta documental"| mcp
+  mcp -->|"Guía de integración"| dev

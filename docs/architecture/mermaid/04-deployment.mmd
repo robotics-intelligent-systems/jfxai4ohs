@@ -1,0 +1,19 @@
+flowchart LR
+  client["Cliente HTTPS"]
+  edge["Proxy / ingreso"]
+  app["Aplicación modular"]
+  worker["Worker de integración"]
+  db["Base de datos privada"]
+  queue["Cola privada"]
+  vault["Almacén de secretos"]
+  telemetry["Métricas y trazas"]
+  external["API externa autorizada"]
+  client -->|"TLS"| edge
+  edge -->|"Sesión validada"| app
+  app -->|"Red privada"| db
+  app -->|"Outbox"| queue
+  queue -->|"Evento"| worker
+  worker -->|"Credenciales acotadas"| vault
+  worker -->|"HTTPS saliente"| external
+  worker -->|"Sin tokens ni PII"| telemetry
+  app -->|"Correlación"| telemetry

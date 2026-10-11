@@ -8,6 +8,13 @@
 >
 > **Architecture objective:** extend JFXAI4OHS with a standards-based Mercado Libre integration while preserving the project's open, modular, replaceable B2B-commerce architecture.
 
+## Architecture and requirements baseline
+
+- [Architecture: five Mermaid views and editable draw.io diagrams](docs/architecture/README.md)
+- [High-level technical specification and verifiable requirements (Spanish)](docs/requirements/high-level-specification.md)
+
+Documentation baseline: 2026-10-10. This repository contains an architecture proposal, not an implemented platform. Technology options and service objectives require stakeholder approval. The official MCP repository confirms the endpoint and a Bearer-token configuration example; the detailed tools page could not be revalidated (HTTP 403). Treat the tool names below as a historical baseline and discover authorized capabilities before activation.
+
 ---
 
 # 1. Project Context
@@ -96,34 +103,21 @@ Those runtime seller capabilities should remain behind the **Mercado Libre REST/
 
 # 3. Target Integration Model
 
-```text
-                         JFXAI4OHS
-                              │
-                              ▼
-                    AI COMMERCE ORCHESTRATOR
-                              │
-             ┌────────────────┼────────────────┐
-             ▼                ▼                ▼
-       Product Agent    Procurement Agent  Supplier Agent
-             │                │                │
-             └────────────────┼────────────────┘
-                              ▼
-                         MCP GATEWAY
-                              │
-               ┌──────────────┼──────────────┐
-               ▼              ▼              ▼
-        Internal Tools   Mercado Libre    Other MCP
-                         MCP Server       Servers
-                              │
-                              ▼
-                Developer Documentation
-                Integration Knowledge
-                              │
-                              ▼
-                    ML API Adapter Layer
-                              │
-                              ▼
-                   Mercado Libre APIs
+```mermaid
+flowchart LR
+  buyer["Comprador / ingeniería"]
+  seller["Proveedor / operador"]
+  core["JFXAI4OHS"]
+  erp["ERP externo"]
+  api["Mercado Libre API"]
+  dev["Desarrollador"]
+  mcp["MCP documental externo"]
+  buyer -->|"Requisitos y compras"| core
+  seller -->|"Catálogo y pedidos"| core
+  core -->|"Adaptador ERP"| erp
+  core -->|"Adaptador REST autorizado"| api
+  dev -->|"Consulta documental"| mcp
+  mcp -->|"Guía de integración"| dev
 ```
 
 ---
@@ -179,7 +173,7 @@ Current Mercado Libre developer documentation states that the MCP server support
 - ChatGPT;
 - other MCP-compatible clients.
 
-The current documentation describes OAuth 2.0 authorization initiated by the MCP client.
+The official repository provides a Bearer-token example. Validate token acquisition and renewal against the selected client and current official documentation; do not assume every client initiates the same authorization flow.
 
 ---
 
@@ -423,7 +417,7 @@ Example site identifiers include:
 ```text
 MLA → Argentina
 MLB → Brazil
-MLM / MEX → Mexico, depending on API context/documentation
+Mexico → resolve the site identifier through the authorized sites API; do not conflate country codes and site IDs
 MCO → Colombia
 MLC → Chile
 MLU → Uruguay
@@ -2911,38 +2905,29 @@ JFXAI4OHS
 
 # 123. Final Integrated Architecture
 
-```text
-┌──────────────────────────────────────────────────────────────────────┐
-│                             JFXAI4OHS                                │
-│                                                                      │
-│ B2B Commerce | Procurement | Open Hardware | Engineering Catalog     │
-└───────────────────────────────┬──────────────────────────────────────┘
-                                │
-                                ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│                    CANONICAL COMMERCE LAYER                          │
-│ Products | Suppliers | Listings | Orders | Inventory | Pricing      │
-└───────────────────────────────┬──────────────────────────────────────┘
-                                │
-            ┌───────────────────┼───────────────────┐
-            ▼                   ▼                   ▼
-       ERP Adapter          AI Agents        Marketplace Gateway
-            │                   │                   │
-            │                   │         ┌─────────┴─────────┐
-            │                   │         ▼                   ▼
-            │                   │  Mercado Libre MCP   Mercado Libre API
-            │                   │  Documentation       Runtime Adapter
-            │                   │         │                   │
-            │                   │         └─────────┬─────────┘
-            │                   │                   ▼
-            │                   │            Mercado Libre
-            │                   │
-            │                   ▼
-            │              RAG / Qdrant
-            │                   │
-            └───────────────────┼───────────────────┐
-                                ▼                   ▼
-                         PostgreSQL             BI / BSC
+```mermaid
+flowchart LR
+  ui["Portal B2B"]
+  gateway["Entrada autenticada"]
+  domain["Dominio comercial"]
+  policy["Política y aprobación"]
+  adapter["Adaptador marketplace"]
+  api["API Mercado Libre"]
+  data["Datos canónicos"]
+  events["Outbox / cola"]
+  erp["Adaptador ERP"]
+  agent["Agentes / RAG"]
+  mcp["Cliente MCP documental"]
+  ui -->|"Solicitud"| gateway
+  gateway -->|"Identidad y tenant"| domain
+  domain -->|"Autorizar comando"| policy
+  policy -->|"Comando aprobado"| adapter
+  adapter -->|"OAuth y REST"| api
+  domain -->|"Persistencia"| data
+  data -->|"Outbox transaccional"| events
+  events -->|"Eventos"| erp
+  agent -->|"Propuesta"| policy
+  agent -->|"Contexto documental"| mcp
 ```
 
 ---
